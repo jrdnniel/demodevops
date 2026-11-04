@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RuangStok — Inventaris Sederhana</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">R</span>RuangStok</a>
+      <span class="storage-label">Penyimpanan file JSON</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">`
+      <p class="eyebrow">INVENTARIS SEDERHANA</p>
+      <h1>Barang tertata,<br>kerja lebih mudah.</h1>
+      <p class="description">Catat barang, perbarui jumlah, dan pantau persediaan Anda dalam satu tempat.</p>
+    </section>
+
+    <section class="summary" aria-label="Ringkasan inventaris">
+      <div class="stat"><span>Jenis barang</span><strong id="total-items">0</strong></div>
+      <div class="stat"><span>Total unit</span><strong id="total-quantity">0</strong></div>
+      <div class="stat stat-note"><span>RUANG KERJA ANDA</span><p>Mulai dari satu barang.<br>Bangun inventaris yang rapi.</p></div>
+    </section>
+
+    <p id="message" class="message" role="status" aria-live="polite" hidden></p>
+
+    <div class="workspace">
+      <section class="card form-card" aria-labelledby="form-title">
+        <div class="section-label">01 / CATAT BARANG</div>
+        <h2 id="form-title">Tambah barang</h2>
+        <p class="muted">Isi informasi barang di bawah ini.</p>
+        <form id="item-form">
+          <label for="name">Nama barang <span aria-hidden="true">*</span></label>
+          <input id="name" name="name" type="text" placeholder="Contoh: Laptop operasional" required maxlength="100">
+
+          <label for="category">Kategori <span aria-hidden="true">*</span></label>
+          <input id="category" name="category" type="text" placeholder="Contoh: Elektronik" required maxlength="60" list="categories">
+          <datalist id="categories"><option value="Elektronik"><option value="Alat tulis"><option value="Perlengkapan"><option value="Lainnya"></datalist>
+
+          <label for="quantity">Jumlah unit <span aria-hidden="true">*</span></label>
+          <input id="quantity" name="quantity" type="number" min="0" max="1000000" step="1" value="1" required>
+
+          <label for="note">Catatan <span class="optional">(opsional)</span></label>
+          <textarea id="note" name="note" rows="3" maxlength="300" placeholder="Lokasi penyimpanan atau keterangan lainnya"></textarea>
+
+          <button id="save-button" class="button button-primary" type="submit">+ Tambah barang</button>
+          <button id="cancel-button" class="button button-secondary" type="button" hidden>Batal edit</button>
+        </form>
+      </section>
+
+      <section class="card list-card" aria-labelledby="list-title">
+        <div class="list-heading"><div><div class="section-label">02 / KELOLA INVENTARIS</div><h2 id="list-title">Daftar barang</h2></div><span id="result-count" class="count-badge">0 barang</span></div>
+        <label class="search-label" for="search">Cari barang</label>
+        <input id="search" type="search" placeholder="Cari nama barang atau kategori…" autocomplete="off">
+        <div id="empty-state" class="empty-state">
+          <span class="empty-icon" aria-hidden="true">▤</span>
+          <h3 id="empty-title">Belum ada barang</h3>
+          <p id="empty-description">Tambahkan barang pertama melalui formulir di samping.</p>
+        </div>
+        <div id="table-container" class="table-container" tabindex="0" role="region" aria-label="Tabel inventaris, geser untuk melihat seluruh kolom" hidden>
+          <table>
+            <caption class="sr-only">Barang yang tersimpan dalam inventaris</caption>
+            <thead><tr><th scope="col">Barang</th><th scope="col">Jumlah</th><th scope="col">Aksi</th></tr></thead>
+            <tbody id="item-list"></tbody>
+          </table>
+        </div>
+        <p class="storage-note">Data tersimpan di file data.json pada komputer yang menjalankan server. Cadangkan file ini agar data tetap aman. <a href="/api/items" target="_blank" rel="noopener">Lihat data JSON</a>.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="container">RuangStok <span>·</span> Inventaris sederhana, setiap hari.</footer>
+</body>
+</html>

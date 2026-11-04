@@ -1,0 +1,11 @@
+{
+  "name": "ruangstok",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CRUD inventaris HTML, CSS, JavaScript dengan penyimpanan file JSON",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/server.test.js"
+  },
+  "engines": { "node": ">=22" }
+}

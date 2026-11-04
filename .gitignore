@@ -1,0 +1,4 @@
+# Data pengguna dibuat otomatis saat server dijalankan.
+data.json
+data.json.*.tmp
+node_modules/
