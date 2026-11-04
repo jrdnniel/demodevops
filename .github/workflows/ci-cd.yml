@@ -1,0 +1,49 @@
+name: CI/CD Pipeline RuangStok
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  # 1. Tahap CI: Pengujian Otomatis
+  test:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Run Test Suite
+        run: npm test
+
+  # 2. Tahap CD: Container Build & Push
+  build-and-push:
+    name: Build & Push Container Image
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build Container Image
+        run: |
+          podman build -t ghcr.io/${{ github.repository_owner }}/ruangstok:latest .
+
+      - name: Push Container Image
+        run: |
+          podman push ghcr.io/${{ github.repository_owner }}/ruangstok:latest
